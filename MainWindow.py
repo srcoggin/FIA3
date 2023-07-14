@@ -31,6 +31,7 @@ class MainWindow():
 
         #Patient Page 2 Buttons
         self.ui.Previous_Page_Button_Patients2.clicked.connect(self.Patients)
+        self.ui.Add_Patient_Button.clicked.connect(self.add_patient)
 
     #Opens the Window When Ran
     def show(self):
@@ -96,7 +97,6 @@ List Of Patients:
         Patient_Info = self.ds.select_matching_user(int(self.ui.Patient_Id_Search_Patient.text()))
         info = ""
         for i in Patient_Info:
-            print(i)
             info += """
 Patient Id: {}
 Patient Name: {} {}
@@ -109,3 +109,11 @@ Num of Treatments Taken: {}
 Patient Info:                                                                          
 {info}                          
 """)
+        
+    def add_patient(self):
+        self.ds.add_user(id = self.ui.Add_Patient_Id.text(), first_name = self.ui.Add_Patient__FirstName.text(), surname = self.ui.Add_Patient_LastName.text(), height = self.ui.Add_Patient_Height.text(), weight = self.ui.Add_Patient_Weight.text(), address = self.ui.Add_Patient_Address.text(), numott = self.ui.Add_Num_Of_treat.text())
+        msg = QMessageBox()
+        msg.setWindowTitle("Opersation Completed!")
+        msg.setText("Done!")
+        msg.setStandardButtons(QMessageBox.Close)
+        msg.exec()

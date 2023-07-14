@@ -5,7 +5,7 @@ import sqlite3
 class DataStore:
     def __init__(self):
         self.db_file = os.path.join(os.getcwd(), "FIA3.db")
-        self.db = sqlite3.connect(self.db_file)
+        self.db = sqlite3.connect(r"C:\Users\Will\Documents\GitHub\FIA3\FIA3.db")
         self.cursor = self.db.cursor()
 
     def __del__(self):
@@ -23,13 +23,13 @@ class DataStore:
         QList = self.cursor.fetchall()
         return QList
 
-    def add_user(self, first_name, surname, age):
+    def add_user(self, id, first_name, surname, height, weight, address, numott):
         self.cursor.execute(
             """
-                INSERT INTO User (firstName, surname, age)
-                VALUES (:first_name, :surname, :age)
+                INSERT INTO Patients (id, FirstName, LastName, Height, Weight, Address, amountoftreatmentstaken)
+                VALUES (:id, :first_name, :surname, :height, :weight, :address, :numott)
             """,
-            {'first_name': first_name, 'surname': surname, "age": age}
+            {"id": id, "FirstName": first_name, "LastName": surname, "Height": height, "Weight": weight, "Address": address, "amountoftreatmentstaken": numott}
         )
         self.db.commit()
 
