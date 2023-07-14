@@ -154,35 +154,14 @@ def option_quit():
     exit()
 
 
-##########################################################
-# if __name__ == '__main__':
+
 app = QApplication(sys.argv)
 ui = MainWindow()
 ui.show()
 app.exec_()
-# ui.welcome()
 
 # Application Menu
 running = True
 while running:
     QtCore.QCoreApplication.processEvents()
     menu_selection = ui.menu()
-    # if menu_selection == 1:
-    #     display_patients()
-    # elif menu_selection == 2:
-    #     search_patients()
-    # elif menu_selection == 3:
-    #     update_or_add_patient_test()
-    # elif menu_selection == 4:
-    #     add_remove_patient()
-    # elif menu_selection == 5:
-    #     display_tests_types()
-    # elif menu_selection == 6:
-    #     display_patient_tests()
-    # elif menu_selection == 7:
-    #     update_test_types()
-    # elif menu_selection == 8:
-    #     add_remove_test_type()
-    # elif menu_selection == 9:
-    #     option_quit()
-    #     running = False
