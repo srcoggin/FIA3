@@ -455,7 +455,7 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="List_Of_Patients_Button">
+         <widget class="QPushButton" name="List_Of_Patients_button">
           <property name="minimumSize">
            <size>
             <width>120</width>
@@ -664,7 +664,7 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="Search_Patient_Button">
+         <widget class="QPushButton" name="Search_Patients_Button">
           <property name="minimumSize">
            <size>
             <width>120</width>
@@ -818,7 +818,7 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="Search_Patient_Button_2">
+           <widget class="QPushButton" name="Next_Page_Button_Patients">
             <property name="minimumSize">
              <size>
               <width>120</width>

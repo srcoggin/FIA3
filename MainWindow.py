@@ -24,7 +24,9 @@ class MainWindow():
 
         #Patient Page 1 Buttons
         self.ui.Remove_Patient_Button.clicked.connect(self.Remove_Patient)
-        
+        self.ui.List_Of_Patients_button.clicked.connect(self.ShowListOfPatients)
+        self.ui.Search_Patients_Button.clicked.connect(self.SearchPatients)
+
     #Opens the Window When Ran
     def show(self):
         self.main_win.show()
@@ -68,4 +70,11 @@ class MainWindow():
         self.ui.stackedWidget.setCurrentWidget(self.ui.Patients)
     
     def Remove_Patient(self):
+        pass
+
+    def ShowListOfPatients(self):
+        List = DataStore.ListOfPatients()
+        self.ui.List_Of_Patients_Label.setText(List)
+
+    def SearchPatients(self):
         pass
