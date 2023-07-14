@@ -2,11 +2,12 @@ from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from UserInterface import Ui_Form
 from datastore import DataStore
 import datetime
-ds = DataStore()
+
 
 class MainWindow():
     def __init__(self):
         self.main_win = QMainWindow()
+        self.ds = DataStore()
         self.ui = Ui_Form()
         self.ui.setupUi(self.main_win)
         self.currentTime = datetime.datetime.now()
@@ -26,6 +27,10 @@ class MainWindow():
         self.ui.Remove_Patient_Button.clicked.connect(self.Remove_Patient)
         self.ui.List_Of_Patients_button.clicked.connect(self.ShowListOfPatients)
         self.ui.Search_Patients_Button.clicked.connect(self.SearchPatients)
+        self.ui.Next_Page_Button_Patients.clicked.connect(self.NextPagePatients)
+
+        #Patient Page 2 Buttons
+        self.ui.Previous_Page_Button_Patients2.clicked.connect(self.Patients)
 
     #Opens the Window When Ran
     def show(self):
@@ -63,6 +68,10 @@ class MainWindow():
         # Shows the message box
         msg.exec()
 
+
+    def NextPagePatients(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.Patients2)
+
     def Home(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.Home)
 
@@ -73,8 +82,30 @@ class MainWindow():
         pass
 
     def ShowListOfPatients(self):
-        List = DataStore.ListOfPatients()
-        self.ui.List_Of_Patients_Label.setText(List)
+        List = self.ds.ListOfPatients()
+        name = ""
+        for i in List:
+            name += (f"{i[0]} \n")
+        self.ui.List_Of_Patients_Label.setText(f"""
+List Of Patients:
+
+{name}                                         
+""")
 
     def SearchPatients(self):
-        pass
+        Patient_Info = self.ds.select_matching_user(int(self.ui.Patient_Id_Search_Patient.text()))
+        info = ""
+        for i in Patient_Info:
+            print(i)
+            info += """
+Patient Id: {}
+Patient Name: {} {}
+Patient Height: {}
+Patient Weight: {}
+Patient Address {}
+Num of Treatments Taken: {}
+    """.format(i[0], i[4], i[5], i[1], i[2], i[3], i[6])
+        self.ui.Search_Patient_Label.setText(f"""                         
+Patient Info:                                                                          
+{info}                          
+""")

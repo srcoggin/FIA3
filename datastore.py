@@ -4,24 +4,24 @@ import sqlite3
 
 class DataStore:
     def __init__(self):
-        self.db_file = os.path.join(os.getcwd(), "app_db.sqlite")
+        self.db_file = os.path.join(os.getcwd(), "FIA3.db")
         self.db = sqlite3.connect(self.db_file)
         self.cursor = self.db.cursor()
 
     def __del__(self):
         self.db.close()
 
-    def select_matching_user(self, first_name, surname):
+    def select_matching_user(self, patientid):
         self.cursor.execute(
             """
-                SELECT firstName, surname, age FROM User
-                WHERE firstName LIKE :first_name
-                OR surname LIKE :surname
+                SELECT * FROM Patients
+                WHERE Id LIKE :patientid
+    
             """,
-            {'first_name': first_name, 'surname': surname}
+            {'patientid': patientid}
         )
-        questions_list = self.cursor.fetchall()
-        return questions_list
+        QList = self.cursor.fetchall()
+        return QList
 
     def add_user(self, first_name, surname, age):
         self.cursor.execute(
@@ -33,10 +33,10 @@ class DataStore:
         )
         self.db.commit()
 
-    def ListOfPatients(self, QList):
+    def ListOfPatients(self):
         self.cursor.execute(
         """
-            SELECT FirstName ||""|| LastName AS "Name" FROM Patients
+            SELECT FirstName ||" "|| LastName AS "Name" FROM Patients
         """
         )
         QList = self.cursor.fetchall()
