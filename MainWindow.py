@@ -24,7 +24,7 @@ class MainWindow():
 
 
         #Patient Page 1 Buttons
-        self.ui.Remove_Patient_Button.clicked.connect(self.Remove_Patient)
+        self.ui.Remove_Patient_Button.clicked.connect(self.delete_patient)
         self.ui.List_Of_Patients_button.clicked.connect(self.ShowListOfPatients)
         self.ui.Search_Patients_Button.clicked.connect(self.SearchPatients)
         self.ui.Next_Page_Button_Patients.clicked.connect(self.NextPagePatients)
@@ -32,6 +32,8 @@ class MainWindow():
         #Patient Page 2 Buttons
         self.ui.Previous_Page_Button_Patients2.clicked.connect(self.Patients)
         self.ui.Add_Patient_Button.clicked.connect(self.add_patient)
+        self.ui.Update_Patient_Button.clicked.connect(self.Update_Paitient)
+    
 
     #Opens the Window When Ran
     def show(self):
@@ -78,9 +80,6 @@ class MainWindow():
 
     def Patients(self):
         self.ui.stackedWidget.setCurrentWidget(self.ui.Patients)
-    
-    def Remove_Patient(self):
-        pass
 
     def ShowListOfPatients(self):
         List = self.ds.ListOfPatients()
@@ -111,9 +110,27 @@ Patient Info:
 """)
         
     def add_patient(self):
-        self.ds.add_user(id = self.ui.Add_Patient_Id.text(), first_name = self.ui.Add_Patient__FirstName.text(), surname = self.ui.Add_Patient_LastName.text(), height = self.ui.Add_Patient_Height.text(), weight = self.ui.Add_Patient_Weight.text(), address = self.ui.Add_Patient_Address.text(), numott = self.ui.Add_Num_Of_treat.text())
+        self.ds.Add_Patient(id = self.ui.Add_Patient_Id.text(), FirstName = self.ui.Add_Patient__FirstName.text(), LastName = self.ui.Add_Patient_LastName.text(), Height = self.ui.Add_Patient_Height.text(), Weight = self.ui.Add_Patient_Weight.text(), Address = self.ui.Add_Patient_Address.text(), Amountoftreatmentstaken = self.ui.Add_Num_Of_treat.text())
+        self.ui.Add_Patient_Id.clear()
+        self.ui.Add_Patient__FirstName.clear()
+        self.ui.Add_Patient_LastName.clear()
+        self.ui.Add_Patient_Height.clear()
+        self.ui.Add_Patient_Weight.clear()
+        self.ui.Add_Patient_Address.clear()
+        self.ui.Add_Num_Of_treat.clear()
         msg = QMessageBox()
         msg.setWindowTitle("Opersation Completed!")
         msg.setText("Done!")
         msg.setStandardButtons(QMessageBox.Close)
         msg.exec()
+
+    def delete_patient(self):
+        self.ds.Delete_Patient(id = self.ui.Patient_Id_Remove_Patient.text())
+        msg = QMessageBox()
+        msg.setWindowTitle("Opersation Completed!")
+        msg.setText("Done!")
+        msg.setStandardButtons(QMessageBox.Close)
+        msg.exec()
+
+    def Update_Paitient(self):
+        self.ds.update_patient(id = self.ui.Update_Patient_Id.text(), FirstName = self.ui.Update_Patient_FirstName.text(), LastName = self.ui.Update_Patient_LastName.text(), Weight = self.ui.Update_Patient_Weight.text(), Height = self.ui.Update_Patient_Height, Address = self.ui.Update_Patient_Address.text(), Amountoftreatmentstaken = self.ui.Update_Num_Of_Treatments.text())
