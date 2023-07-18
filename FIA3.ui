@@ -29,7 +29,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="Home">
     <widget class="QWidget" name="layoutWidget">
@@ -227,7 +227,7 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>270</x>
        <y>60</y>
        <width>310</width>
        <height>110</height>
@@ -391,7 +391,7 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>340</x>
+       <x>10</x>
        <y>60</y>
        <width>232</width>
        <height>360</height>
@@ -551,7 +551,7 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>270</x>
        <y>180</y>
        <width>312</width>
        <height>392</height>
@@ -755,11 +755,11 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>470</y>
+       <x>10</x>
+       <y>500</y>
        <width>219</width>
        <height>72</height>
       </rect>
@@ -880,8 +880,8 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
     <widget class="QWidget" name="layoutWidget_2">
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>470</y>
+       <x>10</x>
+       <y>500</y>
        <width>221</width>
        <height>72</height>
       </rect>
@@ -1001,9 +1001,9 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
      <property name="geometry">
       <rect>
        <x>300</x>
-       <y>50</y>
-       <width>281</width>
-       <height>368</height>
+       <y>20</y>
+       <width>299</width>
+       <height>560</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -1049,6 +1049,18 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
        </layout>
       </item>
       <item>
+       <widget class="QLabel" name="label_29">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>(Input Patient Id and Select an Option Below)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_32">
         <item>
          <spacer name="horizontalSpacer_55">
@@ -1092,6 +1104,63 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
         </item>
         <item>
          <spacer name="horizontalSpacer_56">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_40">
+        <item>
+         <spacer name="horizontalSpacer_71">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="Patient_Update_Name_Radio">
+          <property name="minimumSize">
+           <size>
+            <width>170</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>170</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Patient FirstName:</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_72">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -1163,6 +1232,60 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
        </layout>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_41">
+        <item>
+         <spacer name="horizontalSpacer_73">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="Patient_Update_LastName_Radio">
+          <property name="minimumSize">
+           <size>
+            <width>170</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>170</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Patient LastName:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_74">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_34">
         <item>
          <spacer name="horizontalSpacer_59">
@@ -1206,6 +1329,60 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
         </item>
         <item>
          <spacer name="horizontalSpacer_60">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_42">
+        <item>
+         <spacer name="horizontalSpacer_75">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="Patient_Update_Height_Radio">
+          <property name="minimumSize">
+           <size>
+            <width>130</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>130</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Patient Height:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_76">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -1277,6 +1454,60 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
        </layout>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_43">
+        <item>
+         <spacer name="horizontalSpacer_77">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="Patient_Update_Weight_Radio">
+          <property name="minimumSize">
+           <size>
+            <width>140</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>140</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Patient Weight:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_78">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_36">
         <item>
          <spacer name="horizontalSpacer_63">
@@ -1334,6 +1565,60 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
        </layout>
       </item>
       <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_44">
+        <item>
+         <spacer name="horizontalSpacer_79">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="Patient_Update_Address_Radio">
+          <property name="minimumSize">
+           <size>
+            <width>145</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>145</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Patient Address:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_80">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout_37">
         <item>
          <spacer name="horizontalSpacer_65">
@@ -1377,6 +1662,60 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
         </item>
         <item>
          <spacer name="horizontalSpacer_66">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_45">
+        <item>
+         <spacer name="horizontalSpacer_81">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="Patient_Update_Treatments_Radio">
+          <property name="minimumSize">
+           <size>
+            <width>170</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>170</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Patient Treatments:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_82">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -1509,13 +1848,13 @@ Conveniently located in the heart of the Bundaberg region, our modern clinic pro
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>50</y>
+       <y>20</y>
        <width>281</width>
-       <height>361</height>
+       <height>368</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_10">

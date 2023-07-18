@@ -32,7 +32,7 @@ class MainWindow():
         #Patient Page 2 Buttons
         self.ui.Previous_Page_Button_Patients2.clicked.connect(self.Patients)
         self.ui.Add_Patient_Button.clicked.connect(self.add_patient)
-        self.ui.Update_Patient_Button.clicked.connect(self.Update_Paitient)
+        self.ui.Update_Patient_Button.clicked.connect(self.Update_Patient)
     
 
     #Opens the Window When Ran
@@ -85,30 +85,51 @@ class MainWindow():
         List = self.ds.ListOfPatients()
         name = ""
         for i in List:
-            name += (f"{i[0]} \n")
+            name += (f"{i[0]}, Id: {i[1]} \n")
         self.ui.List_Of_Patients_Label.setText(f"""
 List Of Patients:
 
-{name}                                         
+{name}                      
 """)
 
+    def error(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Opersation Failed")
+        msg.setText("Id Does Not Exsist!")
+        msg.setStandardButtons(QMessageBox.Close)
+        msg.exec()
+
     def SearchPatients(self):
-        Patient_Info = self.ds.select_matching_user(int(self.ui.Patient_Id_Search_Patient.text()))
-        info = ""
-        for i in Patient_Info:
-            info += """
+        patient_id = self.ui.Patient_Id_Search_Patient.text()
+        patients = self.ds.Matching_id()
+        if patient_id not in patients:
+            self.error()
+        else:
+            Patient_Info = self.ds.select_matching_user(self.ui.Patient_Id_Search_Patient.text())
+            info = ""
+            for i in Patient_Info:
+                info += """
 Patient Id: {}
 Patient Name: {} {}
 Patient Height: {}
 Patient Weight: {}
-Patient Address {}
+Patient Address: {}
 Num of Treatments Taken: {}
     """.format(i[0], i[4], i[5], i[1], i[2], i[3], i[6])
-        self.ui.Search_Patient_Label.setText(f"""                         
+            self.ui.Search_Patient_Label.setText(f"""                         
 Patient Info:                                                                          
 {info}                          
 """)
         
+
+    def succesful_popup(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Opersation Completed!")
+        msg.setText("Done!")
+        msg.setStandardButtons(QMessageBox.Close)
+        msg.exec()
+
+
     def add_patient(self):
         self.ds.Add_Patient(id = self.ui.Add_Patient_Id.text(), FirstName = self.ui.Add_Patient__FirstName.text(), LastName = self.ui.Add_Patient_LastName.text(), Height = self.ui.Add_Patient_Height.text(), Weight = self.ui.Add_Patient_Weight.text(), Address = self.ui.Add_Patient_Address.text(), Amountoftreatmentstaken = self.ui.Add_Num_Of_treat.text())
         self.ui.Add_Patient_Id.clear()
@@ -118,19 +139,75 @@ Patient Info:
         self.ui.Add_Patient_Weight.clear()
         self.ui.Add_Patient_Address.clear()
         self.ui.Add_Num_Of_treat.clear()
-        msg = QMessageBox()
-        msg.setWindowTitle("Opersation Completed!")
-        msg.setText("Done!")
-        msg.setStandardButtons(QMessageBox.Close)
-        msg.exec()
+        self.succesful_popup()
 
     def delete_patient(self):
-        self.ds.Delete_Patient(id = self.ui.Patient_Id_Remove_Patient.text())
-        msg = QMessageBox()
-        msg.setWindowTitle("Opersation Completed!")
-        msg.setText("Done!")
-        msg.setStandardButtons(QMessageBox.Close)
-        msg.exec()
+        patient_id = self.ui.Patient_Id_Remove_Patient.text()
+        patients = self.ds.Matching_id()
+        if patient_id not in patients:
+            self.error()
+        else:
+            self.ds.Delete_Patient(id = self.ui.Patient_Id_Remove_Patient.text())
+            self.succesful_popup()
 
-    def Update_Paitient(self):
-        self.ds.update_patient(id = self.ui.Update_Patient_Id.text(), FirstName = self.ui.Update_Patient_FirstName.text(), LastName = self.ui.Update_Patient_LastName.text(), Weight = self.ui.Update_Patient_Weight.text(), Height = self.ui.Update_Patient_Height, Address = self.ui.Update_Patient_Address.text(), Amountoftreatmentstaken = self.ui.Update_Num_Of_Treatments.text())
+
+    def Update_Patient(self):
+        patient_id = self.ui.Update_Patient_Id.text()
+        patients = self.ds.Matching_id()
+        if patient_id not in patients:
+            self.error()
+        else:
+            if self.ui.Patient_Update_Name_Radio.isChecked():
+                id = self.ui.Update_Patient_Id.text()
+                UpdatedValue = self.ui.Update_Patient_FirstName.text()
+                UpdatedSelection = 1
+                self.ds.update_patient(id, UpdatedSelection, UpdatedValue)
+                self.ui.Update_Patient_FirstName.clear()
+                self.succesful_popup()
+
+
+            elif self.ui.Patient_Update_LastName_Radio.isChecked():
+                id = self.ui.Update_Patient_Id.text()
+                UpdatedValue = self.ui.Update_Patient_LastName.text()
+                UpdatedSelection = 2
+                self.ds.update_patient(id, UpdatedSelection, UpdatedValue)
+                self.ui.Update_Patient_LastName.clear()
+                self.succesful_popup()
+
+            elif self.ui.Patient_Update_Address_Radio.isChecked():
+                id = self.ui.Update_Patient_Id.text()
+                UpdatedValue = self.ui.Update_Patient_Address.text()
+                UpdatedSelection = 3
+                self.ds.update_patient(id, UpdatedSelection, UpdatedValue)
+                self.ui.Update_Patient_Address.clear()
+                self.succesful_popup()
+
+
+            elif self.ui.Patient_Update_Height_Radio.isChecked():
+                id = self.ui.Update_Patient_Id.text()
+                UpdatedValue = self.ui.Update_Patient_Height.text()
+                UpdatedSelection = 4
+                self.ds.update_patient(id, UpdatedSelection, UpdatedValue)
+                self.ui.Update_Patient_Height.clear()
+                self.succesful_popup()
+
+
+            elif self.ui.Patient_Update_Weight_Radio.isChecked():
+                id = self.ui.Update_Patient_Id.text()
+                UpdatedValue = self.ui.Update_Patient_Weight.text()
+                UpdatedSelection = 5
+                self.ds.update_patient(id, UpdatedSelection, UpdatedValue)
+                self.ui.Update_Patient_Weight.clear()
+                self.succesful_popup()
+
+
+            elif self.ui.Patient_Update_Treatments_Radio.isChecked():
+                id = self.ui.Update_Patient_Id.text()
+                UpdatedValue = self.ui.Update_Num_Of_Treatments.text()
+                UpdatedSelection = 6
+                self.ds.update_patient(id, UpdatedSelection, UpdatedValue)
+                self.ui.Update_Num_Of_Treatments.clear()
+                self.succesful_popup()
+
+
+

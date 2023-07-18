@@ -11,6 +11,21 @@ class DataStore:
     def __del__(self):
         self.db.close()
 
+    def Matching_id(self):
+        self.cursor.execute(
+            """
+                SELECT id FROM Patients
+            """
+        )
+        QList = self.cursor.fetchall()
+        id = ""
+        for i in QList:
+            id +="{}".format(i)
+        return id
+
+
+
+
     def select_matching_user(self, patientid):
         self.cursor.execute(
             """
@@ -36,7 +51,7 @@ class DataStore:
     def ListOfPatients(self):
         self.cursor.execute(
         """
-            SELECT FirstName ||" "|| LastName AS "Name" FROM Patients
+            SELECT FirstName ||" "|| LastName AS "Name", id FROM Patients
         """
         )
         QList = self.cursor.fetchall()
@@ -52,13 +67,60 @@ class DataStore:
         )
         self.db.commit()
 
-    def update_patient(self, id, FirstName, LastName, Height, Weight, Address, Amountoftreatmentstaken):
-        if FirstName == "" and LastName == "" and Height == "" and Weight == "" and Address == "" and Amountoftreatmentstaken != "":
+    def update_patient(self, id, UpdatedSelection, UpdatedValue):
+        print(UpdatedSelection)
+        if UpdatedSelection == 1:
             self.cursor.execute(
                 """
-                    UPDATE Patients SET Amountoftreatmentstaken = (:Amountoftreatmentstaken) 
+                    UPDATE Patients SET FirstName = (:UpdatedValue)
                     WHERE (:id) = id
                 """,
-                {"Amountoftreatmentstaken": Amountoftreatmentstaken, "id": id}
+                {"UpdatedValue": UpdatedValue, "id": id}
+            )
+            self.db.commit()
+        elif UpdatedSelection == 2:
+            self.cursor.execute(
+                """
+                    UPDATE Patients SET LastName = (:UpdatedValue)
+                    WHERE (:id) = id
+                """,
+                {"UpdatedValue": UpdatedValue, "id": id}
+            )
+            self.db.commit()
+
+        elif UpdatedSelection == 3:
+            self.cursor.execute(
+                """
+                    UPDATE Patients SET Address = (:UpdatedValue)
+                    WHERE (:id) = id
+                """,
+                {"UpdatedValue": UpdatedValue, "id": id}
+            )
+            self.db.commit()
+        elif UpdatedSelection == 4:
+            self.cursor.execute(
+                """
+                    UPDATE Patients SET Height = (:UpdatedValue)
+                    WHERE (:id) = id
+                """,
+                {"UpdatedValue": UpdatedValue, "id": id}
+            )
+            self.db.commit()
+        elif UpdatedSelection == 5:
+            self.cursor.execute(
+                """
+                    UPDATE Patients SET Weight = (:UpdatedValue)
+                    WHERE (:id) = id
+                """,
+                {"UpdatedValue": UpdatedValue, "id": id}
+            )
+            self.db.commit()
+        elif UpdatedSelection == 6:
+            self.cursor.execute(
+                """
+                    UPDATE Patients SET Amountoftreatmentstaken = (:UpdatedValue)
+                    WHERE (:id) = id
+                """,
+                {"UpdatedValue": UpdatedValue, "id": id}
             )
             self.db.commit()
