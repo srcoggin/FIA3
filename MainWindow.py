@@ -46,7 +46,7 @@ class MainWindow():
         self.ui.Remove_Treatment_Button.clicked.connect(self.Remove_Treatment)
 
         #Treatment Page 2 Buttons
-        self.ui.Previous_Page_Treatments.clicked.connect(self.Patients)
+        self.ui.Previous_Page_Treatments.clicked.connect(self.Treatments)
         self.ui.Add_Treatment_Button.clicked.connect(self.add_treatment)
         self.ui.Update_Treatment_Button.clicked.connect(self.Update_Treatment)
     
