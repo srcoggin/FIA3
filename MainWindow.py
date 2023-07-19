@@ -26,6 +26,7 @@ class MainWindow():
         self.ui.Home_Banner_Button.clicked.connect(self.Home)
         self.ui.Patients_Banner_Button.clicked.connect(self.Patients)
         self.ui.Treatments_Banner_Buttons.clicked.connect(self.Treatments)
+        self.ui.Appointment_Banner_Buttons.clicked.connect(self.Appointments)
 
 
         #Patient Page 1 Buttons
@@ -49,7 +50,17 @@ class MainWindow():
         self.ui.Previous_Page_Treatments.clicked.connect(self.Treatments)
         self.ui.Add_Treatment_Button.clicked.connect(self.add_treatment)
         self.ui.Update_Treatment_Button.clicked.connect(self.Update_Treatment)
-    
+
+        #Appointments Page 1 Buttons
+        self.ui.List_Of_Appointments_Button.clicked.connect(self.ShowListOfAppointments)  
+        self.ui.Next_Page_Appointments.clicked.connect(self.NextPageAppointments)  
+        self.ui.Add_Appointment_Button.clicked.connect(self.add_appointment)
+        self.ui.Remove_Appointment.clicked.connect(self.Remove_Appointment)
+
+        #Appointments Page 2 Buttons
+        self.ui.Previous_Page_Appointments.clicked.connect(self.Appointments)
+        self.ui.Search_Appointment_Button.clicked.connect(self.SearchAppointments)
+
 
     #Opens the Window When Ran
     def show(self):
@@ -63,6 +74,13 @@ class MainWindow():
             self.ui.MorningEvening_Label.setText("Afternoon")
         else:
             self.ui.MorningEvening_Label.setText("Evening")
+
+    def NextPageAppointments(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.Apointmenets_Page2)
+
+
+    def Appointments(self):
+        self.ui.stackedWidget.setCurrentWidget(self.ui.Appointments)
 
     #Exits the program
     def Exit(self):
@@ -80,7 +98,7 @@ class MainWindow():
         msg.setText(f"""
         Thank you for using Fighting Fit Physio! 
         This App was Coded and Developed by Will Coggins 
-        This App was Devleoped from 13/07/2023 to (Ongoing)
+        This App was Devleoped from 13/07/2023 to 19/07/2023
         Please Enjoy my other works such as:
         Fia1, Fia2 and The Award Winning Indie Program of the year (2023) "Brad". 
         All of which and many more fun and 
@@ -124,6 +142,39 @@ List Of Treatments:
 {name}       
 """)
         
+
+    def ShowListOfAppointments(self):
+        List = self.ds.ListOfAppointments()
+        name = ""
+        for i in List:
+            name += (f"Id: {i[0]}, Patient Id: {i[1]}, Room Id: {i[2]} \n")
+        self.ui.List_Of_Appointments_Label.setText(f"""
+List Of Appointments:
+{name}                                                                    
+""")
+        
+
+
+    def Remove_Appointment(self):
+        Appointment_id = self.ui.Remove_Appointment_Id.text()
+        Appointments = self.ds.Matching_Appointment_Id()
+        msg = QMessageBox()
+        msg.setText("Are you sure you want to do this?")
+        msg.setWindowTitle("Are you sure!")
+        msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        button_clicked = msg.exec()
+        if button_clicked == QMessageBox.Yes:
+            if Appointment_id not in Appointments:
+                self.error()
+            else:
+                self.ds.Delete_Appointment(id = self.ui.Remove_Appointment_Id.text())
+                self.succesful_popup()
+        elif button_clicked == QMessageBox.No:
+            QMessageBox.close
+        else:
+            QMessageBox.close
+
+
     def Remove_Treatment(self):
         Treatment_id = self.ui.Remove_Treatment_Id.text()
         Treatments = self.ds.Matching_Treatment_id()
@@ -169,6 +220,13 @@ List Of Patients:
         msg.setStandardButtons(QMessageBox.Close)
         msg.exec()
 
+    def ADD_Error(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Operation Failed")
+        msg.setText("    That Id Already Exsists!        ")
+        msg.setStandardButtons(QMessageBox.Close)
+        msg.exec()
+
     def SearchPatients(self):
         patient_id = self.ui.Patient_Id_Search_Patient.text()
         patients = self.ds.Matching_Patient_id()
@@ -200,21 +258,28 @@ Patient Info:
         msg.exec()
 
     def add_treatment(self):
-        self.ds.Add_Treatment(
+        Treatment_id = self.ui.Add_Treatment_Id.text()
+        Treatments = self.ds.Matching_Treatment_id()
+        if Treatment_id not in Treatments:
+            self.ds.Add_Treatment(
             id = self.ui.Add_Treatment_Id.text(),
             Cost = self.ui.Add_Treatment_Cost.text(),
             Description = self.ui.Add_Treatment_Desc.text(),
             TreatmentName = self.ui.Add_Treatment_Name.text()
-        )
-        self.ui.Add_Treatment_Id.clear()
-        self.ui.Add_Treatment_Cost.clear()
-        self.ui.Add_Treatment_Desc.clear()
-        self.ui.Add_Treatment_Name.clear()
-        self.succesful_popup()
-
+            )
+            self.ui.Add_Treatment_Id.clear()
+            self.ui.Add_Treatment_Cost.clear()
+            self.ui.Add_Treatment_Desc.clear()
+            self.ui.Add_Treatment_Name.clear()
+            self.succesful_popup()
+        else:
+            self.ADD_Error()
 
     def add_patient(self):
-        self.ds.Add_Patient(
+        patient_id = self.ui.Add_Patient_Id.text()
+        patients = self.ds.Matching_Patient_id()        
+        if patient_id not in patients:
+            self.ds.Add_Patient(
 
             id = self.ui.Add_Patient_Id.text(), 
             FirstName = self.ui.Add_Patient__FirstName.text(), 
@@ -223,15 +288,41 @@ Patient Info:
             Weight = self.ui.Add_Patient_Weight.text(), 
             Address = self.ui.Add_Patient_Address.text(), 
             Amountoftreatmentstaken = self.ui.Add_Num_Of_treat.text()
-        )
-        self.ui.Add_Patient_Id.clear()
-        self.ui.Add_Patient__FirstName.clear()
-        self.ui.Add_Patient_LastName.clear()
-        self.ui.Add_Patient_Height.clear()
-        self.ui.Add_Patient_Weight.clear()
-        self.ui.Add_Patient_Address.clear()
-        self.ui.Add_Num_Of_treat.clear()
-        self.succesful_popup()
+            )
+            self.ui.Add_Patient_Id.clear()
+            self.ui.Add_Patient__FirstName.clear()
+            self.ui.Add_Patient_LastName.clear()
+            self.ui.Add_Patient_Height.clear()
+            self.ui.Add_Patient_Weight.clear()
+            self.ui.Add_Patient_Address.clear()
+            self.ui.Add_Num_Of_treat.clear()
+            self.succesful_popup()
+        else:
+            self.ADD_Error()
+
+    def add_appointment(self):
+        appointment_id = self.ui.Add_Appointment_Id.text()
+        appointments = self.ds.Matching_Appointment_Id()
+        if appointment_id not in appointments:
+            self.ds.Add_Appointment(
+            id = self.ui.Add_Appointment_Id.text(),
+            Date = self.ui.Add_Appointment_Date.text(),
+            Result = self.ui.Add_Appointment_Result.text(),
+            PatientId = self.ui.Add_Appointment_Patient_Id.text(),
+            RoomId = self.ui.Add_Room_Id.text(),
+            Paid = self.ui.Add_Appointment_Paid.text()
+            )
+            self.ui.Add_Appointment_Paid.clear()
+            self.ui.Add_Appointment_Patient_Id.clear()
+            self.ui.Add_Appointment_Id.clear()
+            self.ui.Add_Appointment_Date.clear()
+            self.ui.Add_Appointment_Result.clear()
+            self.ui.Add_Room_Id.clear()
+            self.succesful_popup()
+        else:
+            self.ADD_Error()
+
+
 
     def delete_patient(self):
         patient_id = self.ui.Patient_Id_Remove_Patient.text()
@@ -253,6 +344,118 @@ Patient Info:
             QMessageBox.close
 
 
+    
+    def SearchAppointments(self):
+        if self.ui.Search_By_Id_Radio.isChecked():
+            Date = 0
+            RoomId = 0
+            PatientId = 0
+            id = self.ui.Search_Appointment_Id.text()
+            SelectedValue = 1
+            self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            appointment_info = self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            info = ""
+            for i in appointment_info:
+                info += ("""
+Id: {}
+Date: {}
+Result: {}
+Patient Id: {}
+Room Id: {}
+Paid: {}
+""").format(i[0], i[1], i[2], i[3], i[4], i[5])
+            self.ui.Search_Appointment_Label.setText(f"""
+Appointment:
+{info}                                                         
+""")
+        elif self.ui.Search_By_Paid_Id_Radio.isChecked():
+            Date = 0
+            RoomId = 0
+            id = 0
+            PatientId = 0
+            SelectedValue = 2
+            self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            appointment_info = self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            info = ""
+            for i in appointment_info:
+                info += ("""
+Id: {}
+Date: {}
+Result: {}
+Patient Id: {}
+Room Id: {}
+Paid: {}                                         
+""").format(i[0], i[1], i[2], i[3], i[4], i[5])
+            self.ui.Search_Appointment_Label.setText(f"""
+Appointments:
+{info}                                             
+""")
+        elif self.ui.Search_By_Room_Id_Radio.isChecked():
+            Date= 0
+            RoomId = self.ui.Search_Room_Id.text()
+            PatientId = 0
+            id = 0
+            SelectedValue = 3
+            self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            appointment_info = self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            info = ""
+            for i in appointment_info:
+                info += ("""
+Id: {}
+Date: {}
+Result: {}
+Patient Id: {}
+Room Id: {}
+Paid: {}                                         
+""").format(i[0], i[1], i[2], i[3], i[4], i[5])
+            self.ui.Search_Appointment_Label.setText(f"""
+Appointment/s:
+{info}                                             
+""")
+        elif self.ui.Search_By_Paitnet_Id_Radio.isChecked():
+            Date = 0
+            RoomId = 0
+            id = 0
+            SelectedValue = 4
+            PatientId = self.ui.Search_Appointment_Patient_Id.text()
+            self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            appointment_info = self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            info = ""
+            for i in appointment_info:
+                info += ("""
+Id: {}
+Date: {}
+Result: {}
+Patient Id: {}
+Room Id: {}
+Paid: {}                                         
+""").format(i[0], i[1], i[2], i[3], i[4], i[5])
+            self.ui.Search_Appointment_Label.setText(f"""
+Appointment/s:
+{info}                                             
+""")
+        elif self.ui.Search_By_Date_Radio.isChecked():
+            Date = self.ui.Search_Appointment_Date.text()
+            RoomId = 0
+            id = 0
+            SelectedValue = 5
+            PatientId = self.ui.Search_Appointment_Patient_Id.text()
+            self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            appointment_info = self.ds.SearchAppointment(id, SelectedValue, RoomId, PatientId, Date)
+            info = ""
+            for i in appointment_info:
+                info += ("""
+Id: {}
+Date: {}
+Result: {}
+Patient Id: {}
+Room Id: {}
+Paid: {}                                         
+""").format(i[0], i[1], i[2], i[3], i[4], i[5])
+            self.ui.Search_Appointment_Label.setText(f"""
+Appointment/s:
+{info}                                             
+""")
 
     def Update_Treatment(self):
         Treatment_id = self.ui.Update_Patient_Id.text()
@@ -298,7 +501,7 @@ Patient Info:
 
     def Update_Patient(self):
         patient_id = self.ui.Update_Patient_Id.text()
-        patients = self.ds.Matching_id()
+        patients = self.ds.Matching_Patient_id()
         msg = QMessageBox()
         msg.setText("Are you sure you want to do this?")
         msg.setWindowTitle("Are you sure!")

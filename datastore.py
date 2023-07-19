@@ -5,7 +5,7 @@ import sqlite3
 class DataStore:
     def __init__(self):
         self.db_file = os.path.join(os.getcwd(), "FIA3.db")
-        self.db = sqlite3.connect(r"C:\Users\Will\Documents\GitHub\FIA3\FIA3.db")
+        self.db = sqlite3.connect(self.db_file)
         self.cursor = self.db.cursor()
 
     def __del__(self):
@@ -25,6 +25,19 @@ class DataStore:
         self.cursor.execute(
             """
                 SELECT id FROM Treatment
+            """
+        )
+        QList = self.cursor.fetchall()
+        id = ""
+        for i in QList:
+            id +="{}".format(i)
+        return id
+
+
+    def Matching_Appointment_Id(self):
+        self.cursor.execute(
+            """
+                SELECT id FROM Appointments
             """
         )
         QList = self.cursor.fetchall()
@@ -56,6 +69,58 @@ class DataStore:
         QList = self.cursor.fetchall()
         return QList
 
+
+    def SearchAppointment(self, id, SelectedValue, RoomId, PatientId, Date):
+        if SelectedValue == 1:
+            self.cursor.execute(
+                """
+                    SELECT * FROM Appointments
+                    WHERE id LIKE :id
+                """,
+                {"id": id}
+            )
+            QList = self.cursor.fetchall()
+            return QList
+        elif SelectedValue == 2:
+            self.cursor.execute(
+                """
+                    SELECT * FROM Appointments
+                    ORDER BY Paid DESC
+                """
+            )
+            QList = self.cursor.fetchall()
+            return QList
+        elif SelectedValue == 3:
+            self.cursor.execute(
+                """
+                    SELECT * FROM Appointments
+                    WHERE RoomId LIKE :RoomId
+                """,
+                {"RoomId": RoomId}
+            )
+            QList = self.cursor.fetchall()
+            return QList
+        elif SelectedValue == 4:
+            self.cursor.execute(
+                """
+                    SELECT * FROM Appointments
+                    WHERE PatientId LIKE :PatientId
+                """,
+                {"PatientId": PatientId}
+            )
+            QList = self.cursor.fetchall()
+            return QList
+        elif SelectedValue == 5:
+            self.cursor.execute(
+                """
+                    SELECT * FROM Appointments
+                    WHERE Date LIKE :Date
+                """,
+                {"Date": Date}
+            )
+            QList = self.cursor.fetchall()
+            return QList
+
     def select_matching_user(self, patientid):
         self.cursor.execute(
             """
@@ -80,6 +145,16 @@ class DataStore:
         self.db.commit()
 
 
+    def Add_Appointment(self, id, Date, Result, PatientId, RoomId, Paid):
+        self.cursor.execute(
+            """
+                INSERT INTO Appointments (id, Date, Result, PatientId, RoomId, Paid)
+                Values (:id, :Date, :Result, :PatientId, :RoomId, :Paid)
+            """,
+            {"id": id, "Date": Date, "Result": Result, "PatientId": PatientId, "RoomId": RoomId, "Paid": Paid}
+        )
+        self.db.commit()
+
     def Add_Patient(self, id, FirstName, LastName, Height, Weight, Address, Amountoftreatmentstaken):
         self.cursor.execute(
             """
@@ -99,6 +174,16 @@ class DataStore:
         QList = self.cursor.fetchall()
         return QList
     
+
+    def ListOfAppointments(self):
+        self.cursor.execute(
+        """
+            SELECT Id, PatientId, RoomId FROM Appointments
+        """
+        )
+        QList = self.cursor.fetchall()
+        return QList
+    
     def Delete_Patient(self, id):
         self.cursor.execute(
         """
@@ -109,6 +194,16 @@ class DataStore:
         )
         self.db.commit()
 
+
+    def Delete_Appointment(self, id):
+        self.cursor.execute(
+            """
+                DELETE FROM Appointments
+                WHERE (:id) = id
+            """,
+            {"id": id}
+        )
+        self.db.commit()
 
     def Delete_Treatment(self, id):
         self.cursor.execute(
